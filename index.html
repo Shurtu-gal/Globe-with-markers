@@ -22,14 +22,22 @@
     color: ['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)]
   }));
 
-  // Generate random data for arcs
-  const arcsData = [...Array(N).keys()].map(() => ({
-    startLat: (Math.random() - 0.5) * 180,
-    startLng: (Math.random() - 0.5) * 360,
-    endLat: (Math.random() - 0.5) * 180,
-    endLng: (Math.random() - 0.5) * 360,
-    color: [['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)], ['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)]]
-  }));
+  // Generate arcs data between markers
+  const arcsData = [];
+  for (let i = 0; i < gData.length; i++) {
+    const startMarker = gData[i];
+    for (let j = i + 1; j < gData.length; j++) {
+      const endMarker = gData[j];
+      const arc = {
+        startLat: startMarker.lat,
+        startLng: startMarker.lng,
+        endLat: endMarker.lat,
+        endLng: endMarker.lng,
+        color: ['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)]
+      };
+      arcsData.push(arc);
+    }
+  }
 
   Globe()
     .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
